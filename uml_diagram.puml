@@ -1,0 +1,98 @@
+@startuml MealAppDiagram
+set namespaceSeparator ::
+
+class "flutter_complete_guide::main.dart::MyApp" {
+  +Widget* build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "flutter_complete_guide::main.dart::MyApp"
+
+class "flutter_complete_guide::models::category.dart::Category" {
+  +String* id
+  +String* title
+  +Color* color
+}
+
+"flutter_complete_guide::models::category.dart::Category" o-- "dart::ui::Color"
+
+class "flutter_complete_guide::models::meal.dart::Meal" {
+  +String* id
+  +List<String*>* categories
+  +String* title
+  +String* imageUrl
+  +List<String*>* ingredients
+  +List<String*>* steps
+  +int* duration
+  +Complexity* complexity
+  +Affordability* affordability
+  +bool* isGlutenFree
+  +bool* isLactoseFree
+  +bool* isVegan
+  +bool* isVegetarian
+}
+
+"flutter_complete_guide::models::meal.dart::Meal" o-- "flutter_complete_guide::models::meal.dart::Complexity"
+"flutter_complete_guide::models::meal.dart::Meal" o-- "flutter_complete_guide::models::meal.dart::Affordability"
+
+class "flutter_complete_guide::models::meal.dart::Complexity" {
+  +int* index
+  {static} +List<Complexity*>* values
+  {static} +Complexity* Simple
+  {static} +Complexity* Challenging
+  {static} +Complexity* Hard
+}
+
+"flutter_complete_guide::models::meal.dart::Complexity" o-- "flutter_complete_guide::models::meal.dart::Complexity"
+"dart::core::Enum" <|-- "flutter_complete_guide::models::meal.dart::Complexity"
+
+class "flutter_complete_guide::models::meal.dart::Affordability" {
+  +int* index
+  {static} +List<Affordability*>* values
+  {static} +Affordability* Affordable
+  {static} +Affordability* Pricey
+  {static} +Affordability* Luxurious
+}
+
+"flutter_complete_guide::models::meal.dart::Affordability" o-- "flutter_complete_guide::models::meal.dart::Affordability"
+"dart::core::Enum" <|-- "flutter_complete_guide::models::meal.dart::Affordability"
+
+class "flutter_complete_guide::screens::categories_screen.dart::CategoriesScreen" {
+  +Widget* build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "flutter_complete_guide::screens::categories_screen.dart::CategoriesScreen"
+
+class "flutter_complete_guide::screens::category_meals_screen.dart::CategoryMealsScreen" {
+  {static} +String* routeName
+  +Widget* build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "flutter_complete_guide::screens::category_meals_screen.dart::CategoryMealsScreen"
+
+class "flutter_complete_guide::widgets::category_item.dart::CategoryItem" {
+  +String* id
+  +String* title
+  +Color* color
+  +void selectCategory()
+  +Widget* build()
+}
+
+"flutter_complete_guide::widgets::category_item.dart::CategoryItem" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "flutter_complete_guide::widgets::category_item.dart::CategoryItem"
+
+class "flutter_complete_guide::widgets::meal_item.dart::MealItem" {
+  +String* title
+  +String* imageUrl
+  +int* duration
+  +Complexity* complexity
+  +Affordability* affordability
+  +void selectMeal()
+  +Widget* build()
+}
+
+"flutter_complete_guide::widgets::meal_item.dart::MealItem" o-- "flutter_complete_guide::models::meal.dart::Complexity"
+"flutter_complete_guide::widgets::meal_item.dart::MealItem" o-- "flutter_complete_guide::models::meal.dart::Affordability"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "flutter_complete_guide::widgets::meal_item.dart::MealItem"
+
+
+@enduml
